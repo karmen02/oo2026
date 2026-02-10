@@ -44,7 +44,7 @@ console.log(spacing);
 var message1 = "Showing gross salaries with intervals of 150EUR, up to 1200 EUR, and their respective net salaries.";
 console.log(message1);
 var salaries2 = [];
-for (var grossSalary_1 = 300; grossSalary_1 <= 1200; grossSalary_1 += 50) {
+for (var grossSalary_1 = 300; grossSalary_1 <= 1200; grossSalary_1 += 75) {
     salaries2.push([
         grossSalary_1 + " EUR",
         salaryNet(grossSalary_1) + " EUR"

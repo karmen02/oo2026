@@ -51,7 +51,7 @@ let message1:string="Showing gross salaries with intervals of 150EUR, up to 1200
 console.log(message1)
 
 let salaries2: (number | string) [][]=[]
-for(let grossSalary=300; grossSalary<=1200; grossSalary+=50){
+for(let grossSalary=300; grossSalary<=1200; grossSalary+=75){
     salaries2.push([
         grossSalary + " EUR", 
         salaryNet(grossSalary) + " EUR"
