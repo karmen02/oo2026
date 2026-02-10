@@ -1,8 +1,5 @@
-//Calculating net vs gross salary via functions
-//Gross salary is before any deductions, net is after deductions.  
-//The program does not take into account monthly pension contributions.
-//The program does take into account a monthly tax free sum of 700€. 
-//Using typical estonian tax rates for calculations. These are: income tax of 22% and unemployment insurance of 1.6%.
+//Calculating net vs gross salary via functions. 
+//Not taking into account monthly pension contributions. Only taking into account monthly tax free sum of 700€, income tax of 22% and unemployment insurance of 1.6%.
 //As taxes are unchanging in time, except when the gov. decides to change them, theyre being kept as constants.
 //Not meant for salaries over 1200EUR per month.
 const unemploymentInsurance: number = 0.016;
@@ -30,9 +27,9 @@ function salaryNet(grossSalary: number): number {
 let spacing:string="*******************"
 
 //Initial gross salary to show how the program works. 
-let grossSalary: number = 2000;
+let grossSalary: number = 886;
 let netWage: number = salaryNet(grossSalary);
-console.log("If gross salary is " + grossSalary + "EUR. Then the net salary would be " + netWage + "EUR. ")
+console.log("Initial example. If gross salary is " + grossSalary + "EUR. Then the net salary would be " + netWage + "EUR. ")
 
 console.log(spacing)
 //These are only to show net salaries for general salaries.
@@ -47,7 +44,7 @@ for(let salary of salaries){
 
 console.log(spacing)
 
-let message1:string="Showing gross salaries with intervals of 150EUR, up to 1200 EUR, and their respective net salaries."
+let message1:string="Showing gross salaries with intervals of 75 EUR, up to 1200 EUR, and their respective net salaries."
 console.log(message1)
 
 let salaries2: (number | string) [][]=[]
@@ -57,4 +54,6 @@ for(let grossSalary=300; grossSalary<=1200; grossSalary+=75){
         salaryNet(grossSalary) + " EUR"
     ])
 }
-console.log(salaries2)
+for (let entry of salaries2) {
+    console.log(entry[0] + " = " + entry[1]);
+}

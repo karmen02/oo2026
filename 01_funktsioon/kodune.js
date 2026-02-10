@@ -1,8 +1,5 @@
-//Calculating net vs gross salary via functions
-//Gross salary is before any deductions, net is after deductions.  
-//The program does not take into account monthly pension contributions.
-//The program does take into account a monthly tax free sum of 700€. 
-//Using typical estonian tax rates for calculations. These are: income tax of 22% and unemployment insurance of 1.6%.
+//Calculating net vs gross salary via functions. 
+//Not taking into account monthly pension contributions. Only taking into account monthly tax free sum of 700€, income tax of 22% and unemployment insurance of 1.6%.
 //As taxes are unchanging in time, except when the gov. decides to change them, theyre being kept as constants.
 //Not meant for salaries over 1200EUR per month.
 var unemploymentInsurance = 0.016;
@@ -28,9 +25,9 @@ function salaryNet(grossSalary) {
 }
 var spacing = "*******************";
 //Initial gross salary to show how the program works. 
-var grossSalary = 2000;
+var grossSalary = 886;
 var netWage = salaryNet(grossSalary);
-console.log("If gross salary is " + grossSalary + "EUR. Then the net salary would be " + netWage + "EUR. ");
+console.log("Initial example. If gross salary is " + grossSalary + "EUR. Then the net salary would be " + netWage + "EUR. ");
 console.log(spacing);
 //These are only to show net salaries for general salaries.
 var message = "More examples of gross salaries per month and their comparisons to net salaries. Keep in mind this is an example and the math changes with an income that's over 7848 EUR per year(1200 EUR per month).";
@@ -41,7 +38,7 @@ for (var _i = 0, salaries_1 = salaries; _i < salaries_1.length; _i++) {
     console.log(salary + " EUR =  " + salaryNet(salary) + "EUR");
 }
 console.log(spacing);
-var message1 = "Showing gross salaries with intervals of 150EUR, up to 1200 EUR, and their respective net salaries.";
+var message1 = "Showing gross salaries with intervals of 75 EUR, up to 1200 EUR, and their respective net salaries.";
 console.log(message1);
 var salaries2 = [];
 for (var grossSalary_1 = 300; grossSalary_1 <= 1200; grossSalary_1 += 75) {
@@ -50,4 +47,7 @@ for (var grossSalary_1 = 300; grossSalary_1 <= 1200; grossSalary_1 += 75) {
         salaryNet(grossSalary_1) + " EUR"
     ]);
 }
-console.log(salaries2);
+for (var _a = 0, salaries2_1 = salaries2; _a < salaries2_1.length; _a++) {
+    var entry = salaries2_1[_a];
+    console.log(entry[0] + " = " + entry[1]);
+}
