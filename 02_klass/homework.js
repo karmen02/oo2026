@@ -11,14 +11,14 @@ var BankAccount = /** @class */ (function () {
     BankAccount.prototype.deposit = function (amount) {
         if (amount > 0) {
             this.balance += amount;
-            console.log(this.owner + " sisestas kontole " + amount + this.currency + ".");
+            console.log(this.owner + " sisestas kontole " + amount + " " + this.currency + ".");
         }
     };
     //withdrawal. If less money than on account, no withdrawal happens and the user is instead met with an error.
     BankAccount.prototype.withdraw = function (amount) {
         if (amount <= this.balance) {
             this.balance -= amount;
-            console.log(this.owner + "võttis kontolt välja" + amount + this.currency + ". Uus konto summa on " + this.balance + this.currency + ".");
+            console.log(this.owner + " võttis kontolt välja " + amount + " " + this.currency + ". Uus konto summa on " + this.balance.toFixed(2) + " " + this.currency + ".");
         }
         else {
             console.log("Kontol pole piisavalt vabu vahendeid. Palun proovi uuesti.");
@@ -26,7 +26,7 @@ var BankAccount = /** @class */ (function () {
     };
     //Balance
     BankAccount.prototype.showBalance = function () {
-        console.log("Konto omanik on " + this.owner + ". Kontojääk on " + this.balance.toFixed(2) + this.currency + ".");
+        console.log("Konto omanik on " + this.owner + ". Kontojääk on " + this.balance.toFixed(2) + " " + this.currency + ".");
     };
     return BankAccount;
 }());

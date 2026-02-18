@@ -7,14 +7,14 @@ class BankAccount {
     deposit(amount: number): void {
         if (amount > 0 ){
             this.balance += amount;
-            console.log(this.owner + " sisestas kontole " + amount + this.currency + ".");
+            console.log(this.owner + " sisestas kontole " + amount + " " + this.currency + ".");
         }
     }
     //withdrawal. If less money than on account, no withdrawal happens and the user is instead met with an error.
     withdraw(amount:number): void {
         if (amount <= this.balance) {
             this.balance -=amount;
-            console.log(this.owner + "võttis kontolt välja" + amount + this.currency + ". Uus konto summa on " + this.balance + this.currency + "." );
+            console.log(this.owner + " võttis kontolt välja " + amount + " " + this.currency + ". Uus konto summa on " + this.balance.toFixed(2) + " " + this.currency + "." );
         }
         else {
             console.log("Kontol pole piisavalt vabu vahendeid. Palun proovi uuesti.");
@@ -22,7 +22,7 @@ class BankAccount {
     }
     //Balance
     showBalance():void {
-        console.log("Konto omanik on " + this.owner + ". Kontojääk on " + this.balance.toFixed(2) + this.currency + ".");
+        console.log("Konto omanik on " + this.owner + ". Kontojääk on " + this.balance.toFixed(2) + " " + this.currency + ".");
     }
 }
 //Creating objects
