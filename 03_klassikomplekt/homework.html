@@ -18,18 +18,24 @@
     <div id="newspapers-list"></div>
     
     <script>
+        // Displays company name and number of workers
         function displayCompany() {
             let html = "<p><strong>Company Name:</strong> " + company1.name + "</p>";
             html = html + "<p><strong>Number of Workers:</strong> " + company1.workers + "</p>";
+            // Text to put into the HTML
             document.getElementById("company-info").innerHTML = html;
         }
-        
+
+        //Displays newspapers and their articles
         function displayNewspapers() {
             let html = "";
             for (let i = 0; i < allNewspapers.length; i++) {
                 let newspaper = allNewspapers[i];
+                // Adding newspaper title
                 html = html + "<div><h3>" + newspaper.title + "</h3>";
+                //Adding nr of articles 
                 html = html + "<p>Articles: " + newspaper.articles.length + "</p><ul>";
+                // Adding articles 
                 for (let j = 0; j < newspaper.articles.length; j++) {
                     let article = newspaper.articles[j];
                     html = html + "<li><strong>" + article.title + "</strong><br>";
@@ -39,10 +45,11 @@
                 }
                 html = html + "</ul></div>";
             }
+            // Adding the HTML to the correct element
             document.getElementById("newspapers-list").innerHTML = html;
         }
-        
-        // Displaying everything once the page loads
+
+        // Loading everything once page loads
         window.addEventListener("load", function() {
             displayCompany();
             displayNewspapers();
