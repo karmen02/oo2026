@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News Portal</title>
+    <script src="homework.js"></script>
+</head>
+<body>
+    <h1>News Portal</h1>
+    
+    <!-- Company-->
+    <h2>Company Information</h2>
+    <div id="company-info"></div>
+    
+    <!-- Newspapers -->
+    <h2>Newspapers</h2>
+    <div id="newspapers-list"></div>
+    
+    <script>
+        function displayCompany() {
+            let html = "<p><strong>Company Name:</strong> " + company1.name + "</p>";
+            html = html + "<p><strong>Number of Workers:</strong> " + company1.workers + "</p>";
+            document.getElementById("company-info").innerHTML = html;
+        }
+        
+        function displayNewspapers() {
+            let html = "";
+            for (let i = 0; i < allNewspapers.length; i++) {
+                let newspaper = allNewspapers[i];
+                html = html + "<div><h3>" + newspaper.title + "</h3>";
+                html = html + "<p>Articles: " + newspaper.articles.length + "</p><ul>";
+                for (let j = 0; j < newspaper.articles.length; j++) {
+                    let article = newspaper.articles[j];
+                    html = html + "<li><strong>" + article.title + "</strong><br>";
+                    html = html + "Author: " + article.author + "<br>";
+                    html = html + "Words: " + article.wordcount + "<br>";
+                    html = html + "Date: " + article.date + "</li>";
+                }
+                html = html + "</ul></div>";
+            }
+            document.getElementById("newspapers-list").innerHTML = html;
+        }
+        
+        // Displaying everything once the page loads
+        window.addEventListener("load", function() {
+            displayCompany();
+            displayNewspapers();
+        });
+    </script>
+</body>
+</html>
