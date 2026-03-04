@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="2calculator.js"></script>
+    <script>
+       let calculators = [];
+       
+       function startPage(){
+        //first calculator object
+        calculators[0] = new CentiToInches();
+        calculators[1] = new InchesToCm();
+        activateCalculator();
+       }
+       
+       function activateCalculator(){
+        //get dropdown element
+        const select = document.getElementById("calculatorSelect");
+        //we ask which option is selected
+        const idx = select.selectedIndex;
+        //picking the calculator object from the array
+        const calc = calculators[idx];
+        const type1 = document.getElementById("type1");
+        const type2 = document.getElementById("type2");
+        const answer = document.getElementById("answer");
+        type1.innerText = calc.inputUnit();
+        type2.innerText = calc.outputUnit();
+        answer.innerText= "";
+        const input = document.getElementById("input1");
+        input.value = "";
+       }
+
+       function buttonClick(){
+        //get dropdown element 
+        //get input 
+        //get answer
+        const select = document.getElementById("calculatorSelect")
+        const input1 = document.getElementById("input1");
+        const answer = document.getElementById("answer");
+        //we pick the correct calculator object
+        const calc = calculators[select.selectedIndex];
+        const value = input1.valueAsNumber;
+        answer.innerText = calc.calculate(value).toFixed(2);
+
+        }
+
+    </script>
+</head>
+<body onload="startPage()">
+    <input type="number" id="input1" onchange="buttonClick()">
+    <span id="type1"></span>
+    <input type="button" value="=" onclick="buttonClick()"/>&nbsp; 
+    <span id="answer"></span>
+    <span id="type2"></span> <br>
+
+    <select id="calculatorSelect" onchange="activateCalculator()">
+        <option value="">centimeters to inches</option>
+        <option value="">inches to centimeters</option>
+    </select>
+</body>
+</html>
