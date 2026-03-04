@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diamond</title>
+    <script src="homework.js"></script>
+    <script>
+        function start() {
+            const canvas = document.getElementById("board1");
+            const ctx = canvas.getContext("2d");
+
+            // Creating constants for the new diamonds
+            const d1 = new Diamond(100, 100, 120, 160); //the first two are used for mainly drawing the diamond (though the width and height are also needed for it)
+            const d2 = new Diamond(300, 200, 100, 80); // the last two numbers are used for the area calc.
+            const d3 = new Diamond(150, 300, 80, 80);
+
+            // Drawing the diamonds on the canvas
+            d1.draw(ctx);
+            d2.draw(ctx);
+            d3.draw(ctx);
+        }
+    </script>
+</head>
+<body onload="start()">
+    <canvas id="board1" height="400" width="400"></canvas>
+</body>
+</html>
