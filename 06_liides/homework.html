@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="homework.js"></script>
+    <script>
+       let calculators = [];
+       
+       function startPage(){
+        //first calculator object
+        calculators[0] = new JoulesToCal();
+        calculators[1] = new CalToJoules();
+        calculators[2] = new JoulesToKcal(); 
+        calculators[3] = new KcalToJoules(); 
+        activateCalculator();
+       }
+       
+       function activateCalculator(){
+        const select = document.getElementById("calculatorSelect");
+        const idx = select.selectedIndex;
+        const calc = calculators[idx];
+
+        const type1 = document.getElementById("type1");
+        const type2 = document.getElementById("type2");
+        const answer = document.getElementById("answer");
+
+        type1.innerText = calc.inputUnit();
+        type2.innerText = calc.outputUnit();
+        answer.innerText= "";
+        const input = document.getElementById("input1");
+        input.value = "";
+       }
+
+       function buttonClick(){
+        const select = document.getElementById("calculatorSelect")
+        const input1 = document.getElementById("input1");
+        const answer = document.getElementById("answer");
+        //we pick the correct calculator object
+        const calc = calculators[select.selectedIndex];
+        const value = input1.valueAsNumber;
+        answer.innerText = calc.calculate(value).toFixed(3);
+
+        }
+
+    </script>
+</head>
+<body onload="startPage()">
+    <h1>Conversion of Joules and Calories</h1>
+    <p>Joules - Physics SI Unit <br> Calorie - Chemistry Unit, ie heating 1g of water <br> Kilocalorie - Nutritional Unit, such as food energy 
+        <br><hr> Basic testing of the calculator: 1000J -> 239.006cal -> 0.239kcal  </p>
+    <input type="number" id="input1" onchange="buttonClick()">
+    <span id="type1"></span>
+    <input type="button" value="=" onclick="buttonClick()"/>&nbsp; 
+    <span id="answer"></span>
+    <span id="type2"></span> <br>
+
+    <select id="calculatorSelect" onchange="activateCalculator()">
+        <option value="">Joules to calories</option>
+        <option value="">Calories to Joules</option>
+        <option value="">Joules to kilocalories</option>
+        <option value="">Kilocalories to Joules</option>
+    </select>
+</body>
+</html>
