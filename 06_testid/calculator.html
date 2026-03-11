@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator with testing</title>
+    <script>
+        let calcobj=null;
+        let exports={};
+        
+        function startPage(){
+            calcobj=new Calculator();
+            document.getElementById("panel1").innerText=calcobj.getPanelContent();
+
+        }
+    
+        //every time a buttons clicked
+        function buttonPress(ev){
+            //ev.target.value is value of the clicked button
+            //if the button is 5 then the value is 5
+            calcobj.pressButton(ev.target.value);
+            //update the display w the text
+            document.getElementById("panel1").innerText=calcobj.getPanelContent();
+            
+        };
+        //this is to expose the function to HTML
+        window.startPage=startPage;
+        window.buttonPress=buttonPress;
+    </script>
+    <script src="calculator.js"></script>
+    <style>
+        input[type=button]{width: 50px}
+        #panel1{width:157px;
+        margin-bottom: 10px;
+        border: 10px solid rgb(180, 91, 91);
+    }
+
+    </style>
+</head>
+<body onload="startPage()">
+    <div id="panel1"></div>
+    <input type="button"value="1" onclick="buttonPress(event)">
+    <input type="button"value="2" onclick="buttonPress(event)">
+    <input type="button"value="3" onclick="buttonPress(event)"/><br/>
+    <input type="button"value="4" onclick="buttonPress(event)">
+    <input type="button"value="5" onclick="buttonPress(event)">
+    <input type="button"value="6" onclick="buttonPress(event)"/><br/>
+    <input type="button"value="7" onclick="buttonPress(event)">
+    <input type="button"value="8" onclick="buttonPress(event)">
+    <input type="button"value="9" onclick="buttonPress(event)"/><br/>
+    <input type="button"value="" onclick="buttonPress(event)">
+    <input type="button"value="0" onclick="buttonPress(event)">
+    <input type="button"value="C" onclick="buttonPress(event)">
+    <br><br>
+    <input type="button"value="+" onclick="buttonPress(event)">
+    <input type="button"value="-" onclick="buttonPress(event)">
+    <input type="button"value="*" onclick="buttonPress(event)">
+    <input type="button"value="/" onclick="buttonPress(event)">
+</body>
+</html>
