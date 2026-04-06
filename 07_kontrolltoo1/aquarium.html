@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aquarium</title>
+    <script src="aquarium.js" defer></script>
+    <script>
+        let myAquarium;
+        //creating the canvas, making the shape
+        function startPage() {
+            let canvas = document.getElementById("canvas1");
+            let ctx = canvas.getContext("2d");
+        
+            myAquarium = new Aquarium(100, 80, 50, ctx);
+        }
+        // making the required buttons for add, remove, 
+        function buttonClick(action) {
+            const input = document.getElementById("input1");
+            const answer = document.getElementById("answer");
+            const value = input.valueAsNumber;
+
+            if (action === 'add') {
+                answer.innerText = myAquarium.addWater(value);
+            } else if (action === 'remove') {
+                answer.innerText = myAquarium.removeWater(value);
+            }
+        }
+    </script>
+</head>
+<body onload="startPage()">
+    <h1>Aquarium</h1>
+    
+    <canvas id="canvas1" width="300" height="250"></canvas>
+    <br><br>
+    <!-- adding the inputs with their ids/values-->
+    <input type="number" id="input1" placeholder="Liitrit (L)">
+    <input type="button" value="Lisa vett" onclick="buttonClick('add')">
+    <input type="button" value="Eemalda vett" onclick="buttonClick('remove')">
+    <br><br>
+    
+    <span id="answer" style="font-weight: bold; color: rgb(0, 0, 0);"></span>
+
+</body>
+</html>
