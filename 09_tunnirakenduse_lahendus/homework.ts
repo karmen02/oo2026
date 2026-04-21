@@ -10,6 +10,7 @@ class Water {
         this.waterAmount = waterAmount;
         this.temperature = temperature;
     }
+
     //upd freezers cooling power
     setPower(newPower: number): void {
         this.power = newPower;
@@ -19,9 +20,11 @@ class Water {
     getTemperature(): number {
         return this.temperature;
     }
+
+
     //math for cooling similar to classwork
     coolASecond(): void {
-        let joules = this.power;
+        let joules=this.power;
         const temp=this.power / ((this.waterAmount/1000) * this.specialHeatCap);
         this.temperature -= temp; 
     }
@@ -41,6 +44,7 @@ console.log(w.getTemperature());
 w.setPower(1500);
 console.log("after setting the cooling power " + w.getTemperature());
 w.coolASecond();
+
 console.log("The temperature after one second is " + w.getTemperature());
 
 const target = 0; 
