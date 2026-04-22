@@ -4,8 +4,8 @@
   "description": "Objektorienteeritud programmeerimise kursus kevadsemestril 2026",
   "main": "index.js",
   "scripts": {
-  "test": "jest"
-},
+    "test": "jest"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/karmen02/oo2026.git"
@@ -21,7 +21,7 @@
   "devDependencies": {
     "@types/jest": "^30.0.0",
     "jest": "^30.3.0",
-    "ts-jest": "^29.4.6",
+    "ts-jest": "^29.4.9",
     "typescript": "^5.9.3"
   }
 }
