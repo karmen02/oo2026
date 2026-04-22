@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Freezer</title>
+    <script src="tempenergysim.js" defer></script> 
+    <script>
+        //empty container for materials
+        let w = null;
+        let i = null;
+        let room = null;
+
+        
+        function startPage() {
+            document.getElementById("output").innerText = "No materials yet. Press 'Add materials' to begin.";
+        }
+
+        //grabbing user input
+        function startMaterials(){
+            const wMass = document.getElementById("wmass").valueAsNumber;
+            const wTemp = document.getElementById("wtemp").valueAsNumber;
+            
+            const iMass = document.getElementById("imass").valueAsNumber;
+            const iTemp = document.getElementById("itemp").valueAsNumber;
+
+            const rLen = document.getElementById("rlength").valueAsNumber;
+            const rWid = document.getElementById("rwidth").valueAsNumber;
+            const rHeight = document.getElementById("rheight").valueAsNumber;
+            const rTemp = document.getElementById("rtemp").valueAsNumber;
+            
+            if(isNaN(wMass) || isNaN(wTemp) || isNaN(iMass) || isNaN(iTemp) || isNaN(rLen) || isNaN(rWid) || isNaN(rHeight) || isNaN(rTemp)) {
+            document.getElementById("output").innerText = "Please fill all the fields!";
+            return;
+            }
+
+        }
+
+
+        
+        
+    </script>
+    
+</head>
+<body onload="startPage()">
+    <div>
+        <h3>Water</h3>
+        <label>Mass in kg: <input type="number" id="wmass" ></label><br>
+        <label>Initial Temp C: <input type="number" id="wtemp"></label><br>
+    </div>
+
+    <div>
+        <h3>Iron</h3>
+        <label>Mass in kg: <input type="number" id="imass"></label><br>
+        <label>Initial Temp C: <input type="number" id="itemp"></label><br>
+    </div>
+
+    <div>
+        <h3>Room (Air)</h3>
+        <label>Length in m: <input type="number" id="rlength"></label><br>
+        <label>Width in m: <input type="number" id="rwidth"></label><br>
+        <label>Height in m: <input type="number" id="rheight"></label><br>
+        <label>Initial Temp C: <input type="number" id="rtemp"></label><br>
+    </div>
+    <div>Energy</div>
+    <h3>Add energy</h3>
+    <label>Energy in J <input type="number" id="energy"></label><br>
+    <div>
+        <button onclick="addMaterials()">Add materials</button>
+        <button onclick="energyToWI()">Add Energy to Water & Iron</button>
+        <button onclick="transferEnergy()">Transfer energy between Iron and Water</button>
+        <button onclick="addEnergyToAir()">Add Energy to Room Air</button>
+        <button onclick="calculateFinalTemp()">Calculate Equal Temp</button>
+    </div>
+    <h2 id="output"></h2>
+</body>
+</html>
