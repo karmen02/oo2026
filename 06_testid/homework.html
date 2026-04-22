@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scientific Calculator with testing</title>
+    <script>
+        let calcobj = null;
+        let exports = {};
+        
+        function startPage(){
+            calcobj = new Calculator();
+            document.getElementById("panel1").innerText = calcobj.getPanelContent();
+        }
+    
+        function buttonPress(ev){
+            calcobj.pressButton(ev.target.value);
+            document.getElementById("panel1").innerText = calcobj.getPanelContent();
+        }
+        
+        window.startPage = startPage;
+        window.buttonPress = buttonPress;
+    </script>
+    <script src="homework.js"></script>
+    <style>
+        input[type=button] { width: 50px; margin: 2px; }
+        #panel1 {
+            width: 215px;
+            min-height: 20px;
+            margin-bottom: 10px;
+            padding: 5px;
+            border: 5px solid rgb(180, 91, 91);
+            background-color: #f9f9f9;
+            text-align: right;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body onload="startPage()">
+    <div id="panel1"></div>
+    
+    <input type="button" value="sin" onclick="buttonPress(event)">
+    <input type="button" value="cos" onclick="buttonPress(event)">
+    <input type="button" value="tan" onclick="buttonPress(event)">
+    <input type="button" value="π" onclick="buttonPress(event)"><br/>
+
+    <input type="button" value="√" onclick="buttonPress(event)">
+    <input type="button" value="x²" onclick="buttonPress(event)">
+    <input type="button" value="C" onclick="buttonPress(event)">
+    <input type="button" value="/" onclick="buttonPress(event)"><br/>
+
+    <input type="button" value="7" onclick="buttonPress(event)">
+    <input type="button" value="8" onclick="buttonPress(event)">
+    <input type="button" value="9" onclick="buttonPress(event)">
+    <input type="button" value="*" onclick="buttonPress(event)"><br/>
+    
+    <input type="button" value="4" onclick="buttonPress(event)">
+    <input type="button" value="5" onclick="buttonPress(event)">
+    <input type="button" value="6" onclick="buttonPress(event)">
+    <input type="button" value="-" onclick="buttonPress(event)"><br/>
+    
+    <input type="button" value="1" onclick="buttonPress(event)">
+    <input type="button" value="2" onclick="buttonPress(event)">
+    <input type="button" value="3" onclick="buttonPress(event)">
+    <input type="button" value="+" onclick="buttonPress(event)"><br/>
+    
+    <input type="button" value="0" onclick="buttonPress(event)">
+    <input type="button" value="." onclick="buttonPress(event)">
+    <input type="button" value="=" onclick="buttonPress(event)">
+</body>
+</html>
