@@ -37,20 +37,6 @@ var MaterialAmount = /** @class */ (function () {
     };
     return MaterialAmount;
 }());
-var w = new MaterialAmount(3, 20, 4200);
-var i = new MaterialAmount(10, 20, 412);
-w.energychange(10000);
-i.energychange(10000);
-console.log("***********************************");
-console.log("Water temperature: ".concat(w.currentTemp().toFixed(2), "\u00B0C"));
-console.log("Water temperature: ".concat(i.currentTemp().toFixed(2), "\u00B0C"));
-// neljanda osa jaoks
-if (i.currentTemp() > w.currentTemp()) {
-    //raualt tuhat maha, veele juurde
-    i.energychange(-1000);
-    w.energychange(1000);
-    console.log("Updated water temperature: ".concat(w.currentTemp().toFixed(2), "\u00B0C and updated iron temperature: ").concat(i.currentTemp().toFixed(2), "\u00B0C"));
-}
 var AirAmount = /** @class */ (function (_super) {
     __extends(AirAmount, _super);
     function AirAmount(length, width, height, temperature) {
@@ -66,17 +52,7 @@ var AirAmount = /** @class */ (function (_super) {
     }
     return AirAmount;
 }(MaterialAmount));
-//õhu testimine
-var room = new AirAmount(5, 4, 3, 20);
-console.log("***********************************");
-console.log("The air mass in the room: ".concat(room.mass, " kg"));
-room.energychange(10000);
-console.log("Room temperature after adding 10000J of energy: ".concat(room.currentTemp().toFixed(2), "\u00B0C"));
-//vaja teha:
-//1. funktsioon - materjalide list, arvutab lõpp temperatuuri kui lubatakse energiat vahetada
-// nt sama temp ei saa vahetada energiat ehk siis oleks  =, muidu nt > või <
-//
-var materials = [w, i, room];
+// equal temp calc
 function equalTemp(materials) {
     var totalThermalEnergy = 0;
     var totalAffect = 0;
@@ -91,6 +67,3 @@ function equalTemp(materials) {
     var finalTemp = totalThermalEnergy / totalAffect;
     return finalTemp;
 }
-var finalTemp = equalTemp(materials);
-console.log("***********************************");
-console.log("The FINAL temperatures are: ".concat(finalTemp.toFixed(2), "\u00B0C"));

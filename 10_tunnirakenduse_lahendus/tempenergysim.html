@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Freezer</title>
-    <script src="tempenergysim.js" defer></script> 
+    <title>Energy</title>
+    <script src="tempenergysim.js"></script> 
     <script>
         //empty container for materials
         let w = null;
@@ -34,6 +34,74 @@
             return;
             }
 
+            w = new MaterialAmount(wMass, wTemp, 4200);
+            i = new MaterialAmount(iMass, iTemp, 412);
+            room = new AirAmount(rLen, rWid, rHeight, rTemp);
+            document.getElementById("output").innerText = "Materials added successfully.";
+        }
+
+        function addMaterials() {
+            startMaterials();
+        }
+
+        function energyToWI() {
+            if (!w || !i) {
+                document.getElementById("output").innerText = "Add materials first.";
+                return;
+            }
+            const energy = document.getElementById("energy").valueAsNumber;
+            if (isNaN(energy)) {
+                document.getElementById("output").innerText = "Please enter a valid energy value.";
+                return;
+            }
+            w.energychange(energy);
+            i.energychange(energy);
+            document.getElementById("output").innerText = "Energy added. Water temp: " + w.currentTemp().toFixed(2) + "°C, Iron temp: " + i.currentTemp().toFixed(2) + "°C";
+        }
+
+        function transferEnergy() {
+            if (!w || !i) {
+                document.getElementById("output").innerText = "Add materials first.";
+                return;
+            }
+            if (i.currentTemp() > w.currentTemp()) {
+                i.energychange(-1000);
+                w.energychange(1000);
+                document.getElementById("output").innerText = "Energy transferred. Water temp: " + w.currentTemp().toFixed(2) + "°C, Iron temp: " + i.currentTemp().toFixed(2) + "°C";
+            } else {
+                document.getElementById("output").innerText = "No transfer needed or iron is not hotter.";
+            }
+        }
+
+        function addEnergyToAir() {
+            if (!room) {
+                document.getElementById("output").innerText = "Add materials first.";
+                return;
+            }
+            const energy = document.getElementById("energy").valueAsNumber;
+            if (isNaN(energy)) {
+                document.getElementById("output").innerText = "Please enter a valid energy value.";
+                return;
+            }
+            room.energychange(energy);
+            document.getElementById("output").innerText = "Energy added to air. Room temp: " + room.currentTemp().toFixed(2) + "°C";
+        }
+
+        function calculateFinalTemp() {
+            if (!w || !i || !room) {
+                document.getElementById("output").innerText = "Add materials first.";
+                return;
+            }
+            const materials = [w, i, room];
+            let totalThermalEnergy = 0;
+            let totalAffect = 0;
+            for (let material of materials) {
+                const influence = material.affect();
+                totalAffect += influence;
+                totalThermalEnergy += influence * material.currentTemp();
+            }
+            const finalTemp = totalThermalEnergy / totalAffect;
+            document.getElementById("output").innerText = "Final equal temperature: " + finalTemp.toFixed(2) + "°C";
         }
 
 
