@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop selector</title>
+    <script src="KT.js" defer></script>
+    <script>
+
+    let chains = []; 
+    let currentOpenShops = [];
+
+    function startPage() {
+    let coffeeChain = new ShopChain("Starbies");
+    coffeeChain.addShop(new Shop("Vabaduse Starbies", 9, 30, 20, 0 ));
+    coffeeChain.addShop(new Shop("Kristiine Starbies", 10, 0, 19, 30));
+
+    let cornerChain = new ShopChain("K-Kiosk");
+    cornerChain.addShop(new Shop("Viru K-Kiosk", 8, 0, 17,0))
+    cornerChain.addShop(new Shop("Nõmme K-Kiosk", 11, 0,18, 30));
+
+    chains.push(coffeeChain)
+    chains.push(cornerChain);
+
+    document.getElementById("output").innerHTML = "Shops loaded. Enter a time to check if the store is open."
+
+    document.getElementById("visitCtrl").style.display = "none";
+    }   
+
+    function searchOpenShops() {
+        let h = document.getElementById("searchH").valueAsNumber;
+        let m = document.getElementById("searchM").valueAsNumber;
+        //check
+        if (isNaN(h) || isNaN(m)) {
+            document.getElementById("output").innerHTML = "Please enter the hours and minutes!";
+            return;
+        }
+        let resultText = "Open shops at " + h + ":" + m + "<br><br>";
+        //if open, then dropdown wcurrent opens, clearing last
+        currentOpenShops = [];
+        let dropdown = document.getElementById("shopSelection");
+        dropdown.innerHTML = "";
+        //counting for drop
+        let shopIndex = 0;
+        //looping through shop chains
+        for (let chain of chains) {
+            let openShops = chain.getOpenShops(h, m);
+            // if chain has opens, look for which
+            if (openShops.length > 0) {
+                resultText += chain.name + ":<br>";
+                for (let shop of openShops) {
+                    currentOpenShops.push(shop);
+                    resultText += " - " + shop.name + "<br>";
+
+                    let option = document.createElement("option");
+                    option.value = shopIndex;
+                    option.text = shop.name + " (" + chain.name + ")";
+                    dropdown.appendChild(option);
+
+                    shopIndex++;
+                }
+                resultText += "<br>";
+            }
+        }
+        //hiding displaying dropdown if open/closed
+        if (currentOpenShops.length > 0) {
+            document.getElementById("visitCtrl").style.display = "block";
+        } else {
+            resultText = "No shops are open right now.";
+            document.getElementById("visitCtrl").style.display = "none";
+        }
+
+        document.getElementById("output").innerHTML = resultText;
+    }
+
+    
+    function visitShop () {
+        let selectedIndex = document.getElementById("shopSelection").value;
+        let shop = currentOpenShops[selectedIndex]
+
+        shop.visit();
+        document.getElementById("output").innerHTML = "You visited " + shop.name + ". Total visits: " + shop.visits + ".";
+    }
+
+    function showStats(){
+        let stats = "Statistics: <br><br>";
+        for (let chain of chains) {
+            stats += chain.name + " total visits: " + chain.getTotalVisits() + "<br>";
+            for (let shop of chain.shops) {
+                stats += shop.name + " visits: " + shop.visits + "<br>";
+            }
+            stats += "<br>";
+        }
+        document.getElementById("output").innerHTML = stats;
+    }
+    </script>
+</head>
+<body onload="startPage()">
+    <h1>Shop Selector</h1>
+    <div> 
+        <label> Current Hhour: 0-23<input type="number" id="searchH"></label>
+        <label> Current Min: 0-59<input type="number" id="searchM"></label>
+    </div>
+    <div>
+        <button onclick="searchOpenShops()"> Search Open Shops</button>
+        <button onclick="showStats()"> Show statistics</button>
+    </div>
+
+    <div id="output"></div>
+
+    <div id="visitCtrl">
+        <label> Select a shop to visit</label>
+            <select id="shopSelection"></select>
+        </label>
+        <button onclick ="visitShop()">Visit</button>
+    </div>
+</body>
+</html>
