@@ -52,7 +52,8 @@
             if (items.length === 0){out.innerText = "(no items)"; return;}
             items.forEach(item => {
                 const div =document.createElement("div");
-                div.textContent=item.getSummary();
+                const id = item.getId();
+                div.innerHTML=item.getSummary() + ` <button onclick="deleteItemById('${id}')">Delete</button>`;
                 out.appendChild(div)
             });
             
@@ -86,6 +87,27 @@
         // Trigger download
         a.click();}
         
+        // -----------NEW FEATURES------------
+        function deleteItemById(id){
+            if (library.deleteItem(id)){
+                showItems();
+            }
+        }
+
+        function searchItems(){
+            const query = document.getElementById("searchInput").value;
+            const out = document.getElementById("output");
+            out.innerHTML = "";
+            const results = library.search(query);
+            if (results.length === 0){out.innerText = "(no results)"; return;}
+            results.forEach(item => {
+                const div = document.createElement("div");
+                const id = item.getId();
+                div.innerHTML = item.getSummary() + ` <button onclick="deleteItemById('${id}')">Delete</button>`;
+                out.appendChild(div);
+            });
+        }
+        
         //Expose functions to HTML buttons
         window.startPage=startPage;
         window.addItem=addItem;
@@ -93,6 +115,9 @@
         window.loadFile=loadFile;
         window.download=download;
         window.updateForm=updateForm;
+        //added these two
+        window.deleteItemById=deleteItemById;
+        window.searchItems=searchItems;
     </script>
     <script src="library.js"></script>
 </head>
@@ -133,6 +158,12 @@
     <h3>Items</h3>
     <button onclick="showItems()">Refresh</button>
     <div id="output" style="font-family:monospace"></div>
+
+    <hr>
+    <!-- -----------NEW FEATURES------------ -->
+    <h3>Search</h3>
+    <input type="text" id="searchInput" placeholder="Search by title or author">
+    <button onclick="searchItems()">Search</button>
 
     <hr>
     <h3>Download</h3>

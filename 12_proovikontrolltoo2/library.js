@@ -118,6 +118,24 @@ var Library = /** @class */ (function () {
         }
         return errors;
     };
+    // -----------NEW FEATURES------------
+    //deleting by ID
+    Library.prototype.deleteItem = function (id) {
+        var index = this.items.findIndex(function (item) { return item.getId() === id; });
+        if (index !== -1) {
+            this.items.splice(index, 1);
+            return true;
+        }
+        return false;
+    };
+    //search by title or author
+    Library.prototype.search = function (query) {
+        var q = query.toLowerCase();
+        return this.items.filter(function (item) {
+            return item.getTitle().toLowerCase().includes(q) ||
+                item.getAuthor().toLowerCase().includes(q);
+        });
+    };
     return Library;
 }());
 exports.Library = Library;
