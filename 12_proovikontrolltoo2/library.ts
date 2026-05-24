@@ -111,6 +111,26 @@ class Library{
         }
         return errors;
     }
+
+    // -----------NEW FEATURES------------
+    //deleting by ID
+    deleteItem(id: string): boolean{
+        const index = this.items.findIndex(item => item.getId() === id);
+        if (index !== -1){
+            this.items.splice(index, 1);
+            return true;
+        }
+        return false;
+    }
+
+    //search by title or author
+    search(query: string): LibraryItem[]{
+        const q = query.toLowerCase();
+        return this.items.filter(item => 
+            item.getTitle().toLowerCase().includes(q) || 
+            item.getAuthor().toLowerCase().includes(q)
+        );
+    }
 }
 
 export{
