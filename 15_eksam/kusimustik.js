@@ -1,76 +1,89 @@
-"use strict";
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 //===================================KARMEN=============================================================================================
-class Question {
-    id;
-    text;
-    options;
-    type;
-    constructor(id, text, options, type) {
+var Question = /** @class */ (function () {
+    function Question(id, text, options, type) {
         this.id = id;
         this.text = text;
         this.options = options;
         this.type = type;
     }
-}
-class StageQues extends Question {
-    points;
-    constructor(id, text, options, points) {
-        super(id, text, options, "stage");
-        this.points = points;
+    return Question;
+}());
+var StageQues = /** @class */ (function (_super) {
+    __extends(StageQues, _super);
+    function StageQues(id, text, options, points) {
+        var _this = _super.call(this, id, text, options, "stage") || this;
+        _this.points = points;
+        return _this;
     }
-}
-class ArchetypeQues extends Question {
-    tags;
-    constructor(id, text, options, tags) {
-        super(id, text, options, "archetype");
-        this.tags = tags;
+    return StageQues;
+}(Question));
+var ArchetypeQues = /** @class */ (function (_super) {
+    __extends(ArchetypeQues, _super);
+    function ArchetypeQues(id, text, options, tags) {
+        var _this = _super.call(this, id, text, options, "archetype") || this;
+        _this.tags = tags;
+        return _this;
     }
-}
-class Test {
-    questions;
-    answers;
-    currentIndex;
-    constructor(questions) {
+    return ArchetypeQues;
+}(Question));
+var Test = /** @class */ (function () {
+    function Test(questions) {
         this.questions = questions;
         this.answers = {};
         this.currentIndex = 0;
     }
-    saveAnswer(optionIndex) {
-        const currentQ = this.questions[this.currentIndex];
+    Test.prototype.saveAnswer = function (optionIndex) {
+        var currentQ = this.questions[this.currentIndex];
         this.answers[currentQ.id] = optionIndex;
         this.currentIndex++;
-    }
-    back() {
+    };
+    Test.prototype.back = function () {
         if (this.currentIndex > 0) {
             this.currentIndex--;
         }
-    }
-    getCurrentQuestion() {
+    };
+    Test.prototype.getCurrentQuestion = function () {
         if (this.currentIndex >= this.questions.length) {
             return null;
         }
         return this.questions[this.currentIndex];
-    }
-    finished() {
+    };
+    Test.prototype.finished = function () {
         return this.currentIndex >= this.questions.length;
-    }
-    calculateResults() {
-        let totalScore = 0;
-        let archetype = "";
-        for (let question of this.questions) {
-            const answerIndex = this.answers[question.id];
+    };
+    Test.prototype.calculateResults = function () {
+        var totalScore = 0;
+        var archetype = "";
+        for (var _i = 0, _a = this.questions; _i < _a.length; _i++) {
+            var question = _a[_i];
+            var answerIndex = this.answers[question.id];
             if (answerIndex !== undefined) {
                 if (question.type === "stage") {
-                    const stageQues = question;
+                    var stageQues = question;
                     totalScore += stageQues.points[answerIndex];
                 }
                 else if (question.type === "archetype") {
-                    const archQues = question;
+                    var archQues = question;
                     archetype = archQues.tags[answerIndex];
                 }
             }
         }
-        let stage = "";
+        var stage = "";
         if (totalScore <= 9) {
             stage = "Surviving";
         }
@@ -80,10 +93,11 @@ class Test {
         else {
             stage = "Strategising";
         }
-        return { stage, archetype, score: totalScore };
-    }
-}
-const data = [
+        return { stage: stage, archetype: archetype, score: totalScore };
+    };
+    return Test;
+}());
+var data = [
     new StageQues("q1", "What best describes your current job status?", [
         "A. I'm unemployed or doing anything I can to survive",
         "B. I have a job, but it's not aligned or ideal",
@@ -158,7 +172,7 @@ const data = [
         "D. I'm re-emerging after a pause, burnout, or caregiving"
     ], ["Grounded Giant", "Rising Calf", "Nest Rebuilder", "Re-Emerging Butterfly"])
 ];
-const resultDatabase = {
+var resultDatabase = {
     "Surviving": {
         "Grounded Giant": { insights: ["Needs grounding."], recommendations: "" },
         "Nest Rebuilder": { insights: ["Building foundations."], recommendations: "" },
@@ -179,7 +193,7 @@ const resultDatabase = {
     }
 };
 // ====================================ELISABET============================================================================================
-const imageMap = {
+var imageMap = {
     "Grounded Giant": "res-giant",
     "Rising Calf": "res-calf",
     "Nest Rebuilder": "res-nest",
@@ -187,43 +201,71 @@ const imageMap = {
     "Rebuilder": "res-nest"
 };
 //====================================================KARMEN============================================================================
-let quiz;
-document.addEventListener("DOMContentLoaded", () => {
+var quiz;
+document.addEventListener("DOMContentLoaded", function () {
     quiz = new Test(data);
-    document.getElementById("prev-btn")?.addEventListener("click", goBack);
-    document.getElementById("between-prev-btn")?.addEventListener("click", goBack);
-    document.getElementById("continue-btn")?.addEventListener("click", () => {
-        document.getElementById("between-container")?.classList.add("hidden");
-        renderQuestion();
-    });
+    var prevBtn = document.getElementById("prev-btn");
+    if (prevBtn)
+        prevBtn.addEventListener("click", goBack);
+    var betweenPrevBtn = document.getElementById("between-prev-btn");
+    if (betweenPrevBtn)
+        betweenPrevBtn.addEventListener("click", goBack);
+    var continueBtnEl = document.getElementById("continue-btn");
+    if (continueBtnEl) {
+        continueBtnEl.addEventListener("click", function () {
+            var betweenContainerEl = document.getElementById("between-container");
+            if (betweenContainerEl)
+                betweenContainerEl.classList.add("hidden");
+            renderQuestion();
+        });
+    }
     showQuestion();
 });
 function showQuestion() {
-    document.getElementById("question-container")?.classList.add("hidden");
-    document.getElementById("between-container")?.classList.add("hidden");
-    document.getElementById("result-container")?.classList.add("hidden");
+    var qContainer = document.getElementById("question-container");
+    if (qContainer)
+        qContainer.classList.add("hidden");
+    var bContainer = document.getElementById("between-container");
+    if (bContainer)
+        bContainer.classList.add("hidden");
+    var rContainer = document.getElementById("result-container");
+    if (rContainer)
+        rContainer.classList.add("hidden");
+    //==============================Elisabet===============================================
     updateProgressBar();
     if (quiz.finished()) {
         triggerResultAnimation();
         return;
     }
+    //==============================Karmen===============================================
     if (quiz.currentIndex === 12) {
-        document.getElementById("between-container")?.classList.remove("hidden");
+        var bContainerRemove = document.getElementById("between-container");
+        if (bContainerRemove)
+            bContainerRemove.classList.remove("hidden");
     }
     else {
         renderQuestion();
     }
 }
 function renderQuestion() {
-    document.getElementById("question-container")?.classList.remove("hidden");
-    const question = quiz.getCurrentQuestion();
+    var qContainerRemove = document.getElementById("question-container");
+    if (qContainerRemove)
+        qContainerRemove.classList.remove("hidden");
+    var question = quiz.getCurrentQuestion();
     if (!question)
         return;
-    const isStageOne = quiz.currentIndex < 12;
-    document.getElementById("q-indicator").innerText = isStageOne ? "Section 1: Stage Diagnostic" : "Section 2: Persona Archetype";
-    document.getElementById("q-number").innerText = `Question ${quiz.currentIndex + 1} of ${quiz.questions.length}`;
+    var isStageOne = quiz.currentIndex < 12;
+    var indicatorText = "";
+    if (isStageOne) {
+        indicatorText = "Section 1: Stage Diagnostic";
+    }
+    else {
+        indicatorText = "Section 2: Persona Archetype";
+    }
+    document.getElementById("q-indicator").innerText = indicatorText;
+    document.getElementById("q-number").innerText = "Question ".concat(quiz.currentIndex + 1, " of ").concat(quiz.questions.length);
     document.getElementById("q-title").innerText = question.text;
-    const prevBtn = document.getElementById("prev-btn");
+    var prevBtn = document.getElementById("prev-btn");
     if (prevBtn) {
         if (quiz.currentIndex === 0) {
             prevBtn.classList.add("hidden");
@@ -232,13 +274,13 @@ function renderQuestion() {
             prevBtn.classList.remove("hidden");
         }
     }
-    const optionsDiv = document.getElementById("options-container");
+    var optionsDiv = document.getElementById("options-container");
     optionsDiv.innerHTML = "";
-    question.options.forEach((optText, index) => {
-        const btn = document.createElement("button");
+    question.options.forEach(function (optText, index) {
+        var btn = document.createElement("button");
         btn.innerText = optText;
         btn.className = "option-btn";
-        btn.onclick = () => {
+        btn.onclick = function () {
             quiz.saveAnswer(index);
             showQuestion();
         };
@@ -251,47 +293,54 @@ function goBack() {
 }
 //==================================ELISABET==============================================================================================
 function updateProgressBar() {
-    const totalQuestions = quiz.questions.length;
-    const percentage = (quiz.currentIndex / totalQuestions) * 100;
-    const degrees = (quiz.currentIndex / totalQuestions) * 1440;
-    const blueFill = document.getElementById("blue-fill");
-    const acornImage = document.getElementById("acorn-indicator");
+    var totalQuestions = quiz.questions.length;
+    var percentage = (quiz.currentIndex / totalQuestions) * 100;
+    var degrees = (quiz.currentIndex / totalQuestions) * 1440;
+    var blueFill = document.getElementById("blue-fill");
+    var acornImage = document.getElementById("acorn-indicator");
     if (blueFill)
-        blueFill.style.width = `${percentage}%`;
+        blueFill.style.width = "".concat(percentage, "%");
     if (acornImage)
-        acornImage.style.transform = `translateY(-50%) rotate(${degrees}deg)`;
-    const stepDiag = document.getElementById("step-diag");
-    const stepArch = document.getElementById("step-arch");
-    const stepRes = document.getElementById("step-res");
+        acornImage.style.transform = "translateY(-50%) rotate(".concat(degrees, "deg)");
+    var stepDiag = document.getElementById("step-diag");
+    var stepArch = document.getElementById("step-arch");
+    var stepRes = document.getElementById("step-res");
     if (quiz.currentIndex >= 12 && quiz.currentIndex < totalQuestions) {
-        stepDiag?.classList.remove("active");
-        stepArch?.classList.add("active");
+        if (stepDiag)
+            stepDiag.classList.remove("active");
+        if (stepArch)
+            stepArch.classList.add("active");
     }
     else if (quiz.currentIndex < 12) {
-        stepDiag?.classList.add("active");
-        stepArch?.classList.remove("active");
-        stepRes?.classList.remove("active");
+        if (stepDiag)
+            stepDiag.classList.add("active");
+        if (stepArch)
+            stepArch.classList.remove("active");
+        if (stepRes)
+            stepRes.classList.remove("active");
     }
 }
 function triggerResultAnimation() {
-    const progressZone = document.getElementById("progress-zone");
-    const centerLoader = document.getElementById("center-loader");
-    const stepArch = document.getElementById("step-arch");
-    const stepRes = document.getElementById("step-res");
-    stepArch?.classList.remove("active");
-    stepRes?.classList.add("active");
-    setTimeout(() => {
+    var progressZone = document.getElementById("progress-zone");
+    var centerLoader = document.getElementById("center-loader");
+    var stepArch = document.getElementById("step-arch");
+    var stepRes = document.getElementById("step-res");
+    if (stepArch)
+        stepArch.classList.remove("active");
+    if (stepRes)
+        stepRes.classList.add("active");
+    setTimeout(function () {
         if (progressZone)
             progressZone.style.display = "none";
         if (centerLoader) {
             centerLoader.style.display = "block";
             centerLoader.style.opacity = "1";
         }
-        setTimeout(() => {
+        setTimeout(function () {
             if (centerLoader)
                 centerLoader.style.opacity = "0";
             showFinalResults();
-            setTimeout(() => {
+            setTimeout(function () {
                 if (centerLoader)
                     centerLoader.style.display = "none";
             }, 200);
@@ -300,20 +349,22 @@ function triggerResultAnimation() {
 }
 //===============================KARMEN=================================================================================================
 function showFinalResults() {
-    const resultContainer = document.getElementById("result-container");
+    var resultContainer = document.getElementById("result-container");
     if (resultContainer)
         resultContainer.classList.remove("hidden");
-    const results = quiz.calculateResults();
-    console.log(`User got ${results.score} points`);
-    const dbData = resultDatabase[results.stage]?.[results.archetype];
-    // Populate Text
-    document.getElementById("res-title").innerText = `${results.stage} Stage • ${results.archetype}`;
-    document.getElementById("res-subtitle").innerText = `You're in the ${results.stage} Stage, showing up as a ${results.archetype}.`;
-    const insightsList = document.getElementById("res-insights");
+    var results = quiz.calculateResults();
+    console.log("User got ".concat(results.score, " points"));
+    var dbData = undefined;
+    if (resultDatabase[results.stage]) {
+        dbData = resultDatabase[results.stage][results.archetype];
+    }
+    document.getElementById("res-title").innerText = "".concat(results.stage, " Stage \u2022 ").concat(results.archetype);
+    document.getElementById("res-subtitle").innerText = "You're in the ".concat(results.stage, " Stage, showing up as a ").concat(results.archetype, ".");
+    var insightsList = document.getElementById("res-insights");
     insightsList.innerHTML = "";
     if (dbData) {
-        dbData.insights.forEach((insight) => {
-            const li = document.createElement("li");
+        dbData.insights.forEach(function (insight) {
+            var li = document.createElement("li");
             li.innerText = insight;
             insightsList.appendChild(li);
         });
@@ -323,10 +374,10 @@ function showFinalResults() {
         document.getElementById("res-action").innerText = "Data for this combination needs to be added to the resultDatabase.";
     }
     //================================ELISABET================================================================================================
-    const imageId = imageMap[results.archetype] || "res-giant";
-    const finalImg = document.getElementById(imageId);
+    var imageId = imageMap[results.archetype] || "res-giant";
+    var finalImg = document.getElementById(imageId);
     if (finalImg) {
-        setTimeout(() => {
+        setTimeout(function () {
             finalImg.classList.add("reveal");
         }, 50);
     }

@@ -209,44 +209,67 @@ let quiz: Test;
 
 document.addEventListener("DOMContentLoaded", () => {
     quiz = new Test(data);
-    document.getElementById("prev-btn")?.addEventListener("click", goBack);
-    document.getElementById("between-prev-btn")?.addEventListener("click", goBack);
-    document.getElementById("continue-btn")?.addEventListener("click", () => {
-        document.getElementById("between-container")?.classList.add("hidden");
-        renderQuestion();
-    });
+    
+    const prevBtn = document.getElementById("prev-btn");
+    if (prevBtn) prevBtn.addEventListener("click", goBack);
+    
+    const betweenPrevBtn = document.getElementById("between-prev-btn");
+    if (betweenPrevBtn) betweenPrevBtn.addEventListener("click", goBack);
+    
+    const continueBtnEl = document.getElementById("continue-btn");
+    if (continueBtnEl) {
+        continueBtnEl.addEventListener("click", () => {
+            const betweenContainerEl = document.getElementById("between-container");
+            if (betweenContainerEl) betweenContainerEl.classList.add("hidden");
+            renderQuestion();
+        });
+    }
 
     showQuestion();
 });
 
 function showQuestion() {
-    document.getElementById("question-container")?.classList.add("hidden");
-    document.getElementById("between-container")?.classList.add("hidden");
-    document.getElementById("result-container")?.classList.add("hidden");
+    const qContainer = document.getElementById("question-container");
+    if (qContainer) qContainer.classList.add("hidden");
 
+    const bContainer = document.getElementById("between-container");
+    if (bContainer) bContainer.classList.add("hidden");
+
+    const rContainer = document.getElementById("result-container");
+    if (rContainer) rContainer.classList.add("hidden");
+
+    //==============================Elisabet===============================================
     updateProgressBar();
 
     if (quiz.finished()) {
         triggerResultAnimation();
         return;
     }
-
-    
+//==============================Karmen===============================================
     if (quiz.currentIndex === 12) {
-        document.getElementById("between-container")?.classList.remove("hidden");
+        const bContainerRemove = document.getElementById("between-container");
+        if (bContainerRemove) bContainerRemove.classList.remove("hidden");
     } else {
         renderQuestion();
     }
 }
 
 function renderQuestion() {
-    document.getElementById("question-container")?.classList.remove("hidden");
-    const question = quiz.getCurrentQuestion();
+    const qContainerRemove = document.getElementById("question-container");
+    if (qContainerRemove) qContainerRemove.classList.remove("hidden");
     
+    const question = quiz.getCurrentQuestion();
     if (!question) return;
 
     const isStageOne = quiz.currentIndex < 12;
-    document.getElementById("q-indicator")!.innerText = isStageOne ? "Section 1: Stage Diagnostic" : "Section 2: Persona Archetype";
+    let indicatorText = "";
+    if (isStageOne) {
+        indicatorText = "Section 1: Stage Diagnostic";
+    } else {
+        indicatorText = "Section 2: Persona Archetype";
+    }
+    document.getElementById("q-indicator")!.innerText = indicatorText;
+    
     document.getElementById("q-number")!.innerText = `Question ${quiz.currentIndex + 1} of ${quiz.questions.length}`;
     document.getElementById("q-title")!.innerText = question.text;
 
@@ -296,12 +319,12 @@ function updateProgressBar() {
     const stepRes = document.getElementById("step-res");
 
     if (quiz.currentIndex >= 12 && quiz.currentIndex < totalQuestions) {
-        stepDiag?.classList.remove("active");
-        stepArch?.classList.add("active");
+        if (stepDiag) stepDiag.classList.remove("active");
+        if (stepArch) stepArch.classList.add("active");
     } else if (quiz.currentIndex < 12) {
-        stepDiag?.classList.add("active");
-        stepArch?.classList.remove("active");
-        stepRes?.classList.remove("active");
+        if (stepDiag) stepDiag.classList.add("active");
+        if (stepArch) stepArch.classList.remove("active");
+        if (stepRes) stepRes.classList.remove("active");
     }
 }
 
@@ -311,10 +334,9 @@ function triggerResultAnimation() {
     const stepArch = document.getElementById("step-arch");
     const stepRes = document.getElementById("step-res");
 
-    stepArch?.classList.remove("active");
-    stepRes?.classList.add("active");
+    if (stepArch) stepArch.classList.remove("active");
+    if (stepRes) stepRes.classList.add("active");
 
-    
     setTimeout(() => {
         if (progressZone) progressZone.style.display = "none";
         
@@ -323,7 +345,6 @@ function triggerResultAnimation() {
             centerLoader.style.opacity = "1";
         }
 
-        
         setTimeout(() => {
             if (centerLoader) centerLoader.style.opacity = "0";
             showFinalResults();
@@ -342,9 +363,11 @@ function showFinalResults() {
     const results = quiz.calculateResults();
     console.log(`User got ${results.score} points`);
     
-    const dbData = resultDatabase[results.stage]?.[results.archetype];
+    let dbData = undefined;
+    if (resultDatabase[results.stage]) {
+        dbData = resultDatabase[results.stage][results.archetype];
+    }
 
-    // Populate Text
     document.getElementById("res-title")!.innerText = `${results.stage} Stage • ${results.archetype}`;
     document.getElementById("res-subtitle")!.innerText = `You're in the ${results.stage} Stage, showing up as a ${results.archetype}.`;
     
