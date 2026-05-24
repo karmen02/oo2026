@@ -35,7 +35,7 @@ let students: Student[]=[
 ]
 
 //combine all students into one total
-let classTotal=students[0];
+let classTotal=students[0];  
 
 for(let i=1; i<students.length; i++){
     classTotal=classTotal.add(students[i]);

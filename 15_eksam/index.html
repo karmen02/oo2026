@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pullivara Career Clarity Test</title>
+    <link rel="stylesheet" href="kusimustik.css">
+    <script src="kusimustik.js" defer></script>
+</head>
+<body>
+
+    <main class="main-container">
+        <div id="question-container" class="hidden">
+            <div id="q-indicator" class="q-indicator"></div>
+            <div id="q-number" class="q-number"></div>
+            
+            <h2 id="q-title" class="q-title"></h2>
+            
+            <div id="options-container"></div>
+            
+            <div class="divider">
+                <button id="prev-btn" class="text-btn">&larr; Previous Question</button>
+            </div>
+        </div>
+
+        <div id="between-container" class="text-center hidden">
+            <h2 class="q-title mb-4">Now, Let's Explore Your Career Persona</h2>
+            <div class="mb-8" style="color: #717182;">
+                <p class="mb-2">You've completed the Career Stage Diagnostic, now it's time to uncover your Career Persona Archetype.</p>
+                <p class="mb-2">This section contains 2 short questions about your current work context and personal season.</p>
+                <p class="mb-2">It helps us understand how you're navigating your career and what patterns, needs, and environments support your next level.</p>
+                <p>It's quick but powerful. Choose what reflects your current personal situation.</p>
+            </div>
+            <button id="continue-btn" class="primary-btn">Continue to Career Persona Archetype</button>
+            <button id="between-prev-btn" class="text-btn">Previous Question</button>
+        </div>
+        <!-- ELISABETI-->
+        <img id="center-loader" src="pics/acorn.png" alt="Loading..." style="display: none;">
+
+        <div id="result-container" class="hidden">
+            <h1 class="q-title text-center mb-8">Your Career Clarity Snapshot</h1>
+            
+            <div class="text-center">
+                <div id="res-title" class="result-tag"></div>
+            </div>
+
+            <div class="result-image-zone mb-8">
+                <img id="res-giant" class="final-stage-img" src="pics/acorn_giant.png" alt="Grounded Giant">
+                <img id="res-calf" class="final-stage-img" src="pics/acorn_cow.png" alt="Rising Calf">
+                <img id="res-nest" class="final-stage-img" src="pics/acorn_nest.png" alt="Nest Rebuilder">
+                <img id="res-wings" class="final-stage-img" src="pics/acorn_wings.png" alt="Re-Emerging Butterfly">
+            </div>
+            <!--KARMENI-->
+            <div class="insights-box">
+                <h2 id="res-subtitle" class="mb-6" style="font-size: 20px;"></h2>
+                <h3 class="insights-subtitle">Key Insights:</h3>
+                <ul id="res-insights" class="insights-list"></ul>
+                <h3 class="insights-subtitle">Next Steps Tailored to You:</h3>
+                <p id="res-action"></p>
+            </div>
+        </div>
+<!--ELISABETI KOOD-->
+        <div class="bottom-progress-zone" id="progress-zone" style="position: relative; padding-bottom: 40px; margin-bottom: 20px;">
+            <div class="test-steps-indicator" style="margin: 0 auto 25px auto;">
+                <div class="step-item active" id="step-diag">
+                    <span class="step-number">1</span>
+                    <span class="step-text">Stage Diagnostic</span>
+                </div>
+                <div class="step-divider"></div>
+                <div class="step-item" id="step-arch">
+                    <span class="step-number">2</span>
+                    <span class="step-text">Identity Archetype</span>
+                </div>
+                <div class="step-divider"></div>
+                <div class="step-item" id="step-res">
+                    <span class="step-number">3</span>
+                    <span class="step-text">Result</span>
+                </div>
+            </div>
+
+            <div id="oval-progressbar" style="margin: 0 auto;">
+                <div id="blue-fill">
+                    <img id="acorn-indicator" src="pics/acorn.png" alt="Progress Acorn">
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
