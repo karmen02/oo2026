@@ -1,4 +1,5 @@
 //===================================KARMEN=============================================================================================
+//küsimused
 class Question {
     id: string;
     text: string;
@@ -12,7 +13,7 @@ class Question {
         this.type = type;
     }
 }
-
+//esimesed 12
 class StageQues extends Question {
     points: number[];
 
@@ -21,7 +22,7 @@ class StageQues extends Question {
         this.points = points;
     }
 }
-
+//viimased2
 class ArchetypeQues extends Question {
     tags: string[];
 
@@ -53,11 +54,8 @@ class Test {
             this.currentIndex--;
         }
     }
-
-    getCurrentQuestion(): Question | null {
-        if (this.currentIndex >= this.questions.length) {
-            return null;
-        }
+    //mitmes küs, obj või mitte midagi
+    getCurrentQuestion(): Question {
         return this.questions[this.currentIndex];
     }
 
@@ -69,11 +67,14 @@ class Test {
         let totalScore = 0;
         let archetype = "";
 
+        //vastuse id vastavalt küsimusele ehk mis nr 0-3.
         for (let question of this.questions) {
             const answerIndex = this.answers[question.id];
 
+            //vastas v ei
             if (answerIndex !== undefined) {
                 if (question.type === "stage") {
+                    //vaatab ainult punkte 
                     const stageQues = question as StageQues;
                     totalScore += stageQues.points[answerIndex];
                 } else if (question.type === "archetype") {
@@ -200,13 +201,13 @@ const imageMap: { [key: string]: string } = {
     "Rising Calf": "res-calf",
     "Nest Rebuilder": "res-nest",
     "Re-Emerging Butterfly": "res-wings",
-    "Rebuilder": "res-nest"
 };
 
 
 //====================================================KARMEN============================================================================
 let quiz: Test;
 
+//nii pea kui laetud
 document.addEventListener("DOMContentLoaded", () => {
     quiz = new Test(data);
     
@@ -215,7 +216,8 @@ document.addEventListener("DOMContentLoaded", () => {
     
     const betweenPrevBtn = document.getElementById("between-prev-btn");
     if (betweenPrevBtn) betweenPrevBtn.addEventListener("click", goBack);
-    
+
+    //peidab
     const continueBtnEl = document.getElementById("continue-btn");
     if (continueBtnEl) {
         continueBtnEl.addEventListener("click", () => {
@@ -229,6 +231,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function showQuestion() {
+    //peidab
     const qContainer = document.getElementById("question-container");
     if (qContainer) qContainer.classList.add("hidden");
 
@@ -361,7 +364,6 @@ function showFinalResults() {
     if (resultContainer) resultContainer.classList.remove("hidden");
 
     const results = quiz.calculateResults();
-    console.log(`User got ${results.score} points`);
     
     let dbData = undefined;
     if (resultDatabase[results.stage]) {
@@ -374,16 +376,14 @@ function showFinalResults() {
     const insightsList = document.getElementById("res-insights")!;
     insightsList.innerHTML = "";
     
-    if (dbData) {
-        dbData.insights.forEach((insight: string) => {
-            const li = document.createElement("li");
-            li.innerText = insight;
-            insightsList.appendChild(li);
-        });
-        document.getElementById("res-action")!.innerText = dbData.recommendations;
-    } else {
-        document.getElementById("res-action")!.innerText = "Data for this combination needs to be added to the resultDatabase.";
-    }
+    
+    dbData.insights.forEach((insight: string) => {
+        const li = document.createElement("li");
+        li.innerText = insight;
+        insightsList.appendChild(li);
+    });
+    document.getElementById("res-action")!.innerText = dbData.recommendations;
+
 //================================ELISABET================================================================================================
     const imageId = imageMap[results.archetype] || "res-giant"; 
     const finalImg = document.getElementById(imageId) as HTMLImageElement;

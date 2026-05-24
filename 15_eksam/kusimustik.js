@@ -14,6 +14,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 //===================================KARMEN=============================================================================================
+//küsimused
 var Question = /** @class */ (function () {
     function Question(id, text, options, type) {
         this.id = id;
@@ -23,6 +24,7 @@ var Question = /** @class */ (function () {
     }
     return Question;
 }());
+//esimesed 12
 var StageQues = /** @class */ (function (_super) {
     __extends(StageQues, _super);
     function StageQues(id, text, options, points) {
@@ -32,6 +34,7 @@ var StageQues = /** @class */ (function (_super) {
     }
     return StageQues;
 }(Question));
+//viimased2
 var ArchetypeQues = /** @class */ (function (_super) {
     __extends(ArchetypeQues, _super);
     function ArchetypeQues(id, text, options, tags) {
@@ -57,10 +60,8 @@ var Test = /** @class */ (function () {
             this.currentIndex--;
         }
     };
+    //mitmes küs, obj või mitte midagi
     Test.prototype.getCurrentQuestion = function () {
-        if (this.currentIndex >= this.questions.length) {
-            return null;
-        }
         return this.questions[this.currentIndex];
     };
     Test.prototype.finished = function () {
@@ -69,11 +70,14 @@ var Test = /** @class */ (function () {
     Test.prototype.calculateResults = function () {
         var totalScore = 0;
         var archetype = "";
+        //vastuse id vastavalt küsimusele ehk mis nr 0-3.
         for (var _i = 0, _a = this.questions; _i < _a.length; _i++) {
             var question = _a[_i];
             var answerIndex = this.answers[question.id];
+            //vastas v ei
             if (answerIndex !== undefined) {
                 if (question.type === "stage") {
+                    //vaatab ainult punkte 
                     var stageQues = question;
                     totalScore += stageQues.points[answerIndex];
                 }
@@ -198,10 +202,10 @@ var imageMap = {
     "Rising Calf": "res-calf",
     "Nest Rebuilder": "res-nest",
     "Re-Emerging Butterfly": "res-wings",
-    "Rebuilder": "res-nest"
 };
 //====================================================KARMEN============================================================================
 var quiz;
+//nii pea kui laetud
 document.addEventListener("DOMContentLoaded", function () {
     quiz = new Test(data);
     var prevBtn = document.getElementById("prev-btn");
@@ -210,6 +214,7 @@ document.addEventListener("DOMContentLoaded", function () {
     var betweenPrevBtn = document.getElementById("between-prev-btn");
     if (betweenPrevBtn)
         betweenPrevBtn.addEventListener("click", goBack);
+    //peidab
     var continueBtnEl = document.getElementById("continue-btn");
     if (continueBtnEl) {
         continueBtnEl.addEventListener("click", function () {
@@ -222,6 +227,7 @@ document.addEventListener("DOMContentLoaded", function () {
     showQuestion();
 });
 function showQuestion() {
+    //peidab
     var qContainer = document.getElementById("question-container");
     if (qContainer)
         qContainer.classList.add("hidden");
@@ -353,7 +359,6 @@ function showFinalResults() {
     if (resultContainer)
         resultContainer.classList.remove("hidden");
     var results = quiz.calculateResults();
-    console.log("User got ".concat(results.score, " points"));
     var dbData = undefined;
     if (resultDatabase[results.stage]) {
         dbData = resultDatabase[results.stage][results.archetype];
@@ -362,17 +367,12 @@ function showFinalResults() {
     document.getElementById("res-subtitle").innerText = "You're in the ".concat(results.stage, " Stage, showing up as a ").concat(results.archetype, ".");
     var insightsList = document.getElementById("res-insights");
     insightsList.innerHTML = "";
-    if (dbData) {
-        dbData.insights.forEach(function (insight) {
-            var li = document.createElement("li");
-            li.innerText = insight;
-            insightsList.appendChild(li);
-        });
-        document.getElementById("res-action").innerText = dbData.recommendations;
-    }
-    else {
-        document.getElementById("res-action").innerText = "Data for this combination needs to be added to the resultDatabase.";
-    }
+    dbData.insights.forEach(function (insight) {
+        var li = document.createElement("li");
+        li.innerText = insight;
+        insightsList.appendChild(li);
+    });
+    document.getElementById("res-action").innerText = dbData.recommendations;
     //================================ELISABET================================================================================================
     var imageId = imageMap[results.archetype] || "res-giant";
     var finalImg = document.getElementById(imageId);

@@ -1,3 +1,5 @@
+/* =================================== KARMEN ==================================== */
+/* üldine kujundus lehe jaoks */
 * {
     box-sizing: border-box;
     font-family: system-ui, -apple-system, sans-serif;
@@ -22,11 +24,11 @@ body {
 }
 
 .text-center { text-align: center; }
-.mb-2 { margin-bottom: 8px; }
-.mb-4 { margin-bottom: 16px; }
-.mb-6 { margin-bottom: 24px; }
-.mb-8 { margin-bottom: 32px; }
+.mb32 { margin-bottom: 32px; }
+.mb8 { margin-bottom: 8px; }
 
+/* ==================================== KARMEN ==================================== */
+/*Tekstikujundus küsimustele*/
 .q-indicator {
     color: #1c2340;
     font-weight: 700;
@@ -48,6 +50,8 @@ body {
     margin-bottom: 32px;
 }
 
+/* ==================================== KARMEN ==================================== */
+/*nupud*/
 .option-btn {
     display: block;
     width: 100%;
@@ -107,6 +111,8 @@ body {
     border-top: 1px solid rgba(0, 0, 0, 0.1);
 }
 
+/* ==================================== KARMEN ==================================== */
+/*vastused*/
 .result-tag {
     display: inline-block;
     background-color: #1c2340;
@@ -147,6 +153,8 @@ body {
     display: none !important;
 }
 
+/* ==================================== ELISABET==================================== */
+/*progressiriba*/
 .test-steps-indicator {
     display: flex;
     align-items: center;
@@ -194,6 +202,8 @@ body {
     margin-top: -20px;
 }
 
+/* ====================================ELISABET==================================== */
+/*vastuste piltide animeerimine*/
 .result-image-zone {
     position: relative;
     height: 300px;
@@ -253,6 +263,8 @@ body {
     z-index: 100;
 }
 
+/* ====================================ELISABET ==================================== */
+/*laadimine */
 #center-loader {
     position: fixed; 
     top: 50%;
