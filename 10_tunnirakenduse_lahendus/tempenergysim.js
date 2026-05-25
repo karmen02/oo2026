@@ -58,6 +58,7 @@ function equalTemp(materials) {
     var totalAffect = 0;
     for (var _i = 0, materials_1 = materials; _i < materials_1.length; _i++) {
         var material = materials_1[_i];
+        // mass * spets kuumus 
         var influence = material.affect(); // mass *spets kuumus
         // phm mitu materjali
         totalAffect += influence;

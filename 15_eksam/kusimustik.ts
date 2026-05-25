@@ -195,7 +195,7 @@ const resultDatabase: any = {
 };
 
 // ====================================ELISABET============================================================================================
-
+// Kaardi arhetüüpide ja nende vastavate piltide seos
 const imageMap: { [key: string]: string } = {
     "Grounded Giant": "res-giant",
     "Rising Calf": "res-calf",
@@ -242,8 +242,10 @@ function showQuestion() {
     if (rContainer) rContainer.classList.add("hidden");
 
     //==============================Elisabet===============================================
+    // Iga kord, kui küsimus vahetub, siis uuendame progressi ala elemente
     updateProgressBar();
 
+    // Kui kõik küsimused on vastatud, siis näitame tulemusi
     if (quiz.finished()) {
         triggerResultAnimation();
         return;
@@ -306,58 +308,80 @@ function goBack() {
     showQuestion();
 }
 //==================================ELISABET==============================================================================================
+//Arvutada testi progressi, liigutada täitejoont, panna tammetõru rulluma ja juhtida etapiriba elemente
 function updateProgressBar() {
+    //Küsime küsimuste koguarvu
     const totalQuestions = quiz.questions.length;
+    //Arvutame, kui palju protsenti on läbitud
     const percentage = (quiz.currentIndex / totalQuestions) * 100;
+    //Arvutame, kui mitu kraadi tammetõru peab pöörama
     const degrees = (quiz.currentIndex / totalQuestions) * 1440; 
 
+    //Võtame HTML-ist täite ja tammetõru pildi
     const blueFill = document.getElementById("blue-fill");
     const acornImage = document.getElementById("acorn-indicator");
     
+    //Seame täite laiuseks protsendi
     if (blueFill) blueFill.style.width = `${percentage}%`;
+    //Pöörame tammetõrunõigesse asendisse
+    //translateY(-50%) on vajalik, et tammetõru püsiks vertikaalselt keskele joondatud, kuna ta pöörleb oma keskpunkti ümber
     if (acornImage) acornImage.style.transform = `translateY(-50%) rotate(${degrees}deg)`;
 
+    //Etapiriba elementide juhtimine, võtame ülemised etapirea sammud
     const stepDiag = document.getElementById("step-diag");
     const stepArch = document.getElementById("step-arch");
     const stepRes = document.getElementById("step-res");
 
+    //Kui oleme jõudnud 12. küsimuse juurde, siis lülitame diagnoosist arhetüüpide etapile
     if (quiz.currentIndex >= 12 && quiz.currentIndex < totalQuestions) {
         if (stepDiag) stepDiag.classList.remove("active");
         if (stepArch) stepArch.classList.add("active");
+    //Kui kasutaja on enne 12 küsimust, siis on ainult diagnoosi sammu aktiivsena
     } else if (quiz.currentIndex < 12) {
-        if (stepDiag) stepDiag.classList.add("active");
+        if (stepDiag) stepDiag.classList.add("active");//
         if (stepArch) stepArch.classList.remove("active");
         if (stepRes) stepRes.classList.remove("active");
     }
 }
 
+//Üleminek küsimustest tulemuseni
 function triggerResultAnimation() {
     const progressZone = document.getElementById("progress-zone");
     const centerLoader = document.getElementById("center-loader");
     const stepArch = document.getElementById("step-arch");
     const stepRes = document.getElementById("step-res");
 
+    //Paneme etapirea viismasele sammule ehk "Result"
     if (stepArch) stepArch.classList.remove("active");
     if (stepRes) stepRes.classList.add("active");
 
+    //Ootame 600ms, et alumine tammetõru jõuaks  ovaali lõppu veereda, enne kui muudame allosa elemente
     setTimeout(() => {
+
+        //Kui kohal, kaob kogu allosa progressi ala ära
         if (progressZone) progressZone.style.display = "none";
         
+        //Toome ekraanile laadimistõru
         if (centerLoader) {
-            centerLoader.style.display = "block";
+            centerLoader.style.display = "block"; //Veendume, et ta on nähtav
             centerLoader.style.opacity = "1";
         }
 
+        //Hoiame laadimistõru 1 sekundi
         setTimeout(() => {
+            //Teeme laadimistõru sujuvalt nähtamatuks enne tulemuse näitamist
             if (centerLoader) centerLoader.style.opacity = "0";
+            //Kutsume välja funktsiooni, mis täidab tulemuste tekstid ja pildid ning muud elemendid paika
             showFinalResults();
+            //Peale tulemuste näitamist, teeme laadimistõru täiesti ära 200ms pärast, et ta ei segaks tulemust vaadates
             setTimeout(() => {
                 if (centerLoader) centerLoader.style.display = "none";
             }, 200);
-        }, 1000);
+        }, 1000);//1 sekund
         
-    }, 600);
+    }, 600);//Veeremis aeg 0,6s
 }
+
 //===============================KARMEN=================================================================================================
 function showFinalResults() {
     const resultContainer = document.getElementById("result-container");
@@ -385,8 +409,13 @@ function showFinalResults() {
     document.getElementById("res-action")!.innerText = dbData.recommendations;
 
 //================================ELISABET================================================================================================
+    //Valime õige pildi vastavalt arhetüübile, kui arhetüüp ei ole kaardil, siis näitame "Grounded Giant" pilti
     const imageId = imageMap[results.archetype] || "res-giant"; 
+
+    //Paneme pildile "reveal" klassi, mis muudab ta nähtavaks ja lisab animatsiooni
     const finalImg = document.getElementById(imageId) as HTMLImageElement;
+
+    //Väike viivitus, et tulemuste tekstid jõuaksid enne pilti paika, siis anname pildile "reveal" klassi
     if (finalImg) {
         setTimeout(() => {
             finalImg.classList.add("reveal");

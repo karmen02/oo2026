@@ -44,6 +44,7 @@
             startMaterials();
         }
 
+        //adding energy to water n iron
         function energyToWI() {
             if (!w || !i) {
                 document.getElementById("output").innerText = "Add materials first.";
@@ -58,7 +59,7 @@
             i.energychange(energy);
             document.getElementById("output").innerText = "Energy added. Water temp: " + w.currentTemp().toFixed(2) + "°C, Iron temp: " + i.currentTemp().toFixed(2) + "°C";
         }
-
+        //transfering energy from iron to water if hotter
         function transferEnergy() {
             if (!w || !i) {
                 document.getElementById("output").innerText = "Add materials first.";
@@ -73,6 +74,7 @@
             }
         }
 
+        //adding energy aka J to air
         function addEnergyToAir() {
             if (!room) {
                 document.getElementById("output").innerText = "Add materials first.";
@@ -87,6 +89,7 @@
             document.getElementById("output").innerText = "Energy added to air. Room temp: " + room.currentTemp().toFixed(2) + "°C";
         }
 
+        //calculating final temps aka equal temps
         function calculateFinalTemp() {
             if (!w || !i || !room) {
                 document.getElementById("output").innerText = "Add materials first.";

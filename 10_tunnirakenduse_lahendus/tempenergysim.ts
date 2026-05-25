@@ -58,6 +58,7 @@ function equalTemp(materials: MaterialAmount[]): number {
     let totalAffect = 0;
 
     for (const material of materials) {
+        // mass * spets kuumus 
         const influence = material.affect(); // mass *spets kuumus
         
         // phm mitu materjali

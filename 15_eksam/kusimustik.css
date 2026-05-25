@@ -24,8 +24,9 @@ body {
 }
 
 .text-center { text-align: center; }
-.mb32 { margin-bottom: 32px; }
-.mb8 { margin-bottom: 8px; }
+/*.mb32 { margin-bottom: 32px; }*/
+.mb-8 { margin-bottom: 8px; }
+.mb-16 {margin-bottom: 32px}
 
 /* ==================================== KARMEN ==================================== */
 /*Tekstikujundus küsimustele*/
@@ -245,39 +246,42 @@ body {
     left: 0;
     top: 0;
     height: 100%;
-    width: 0%;
+    width: 0%; /*alustab 0% pealt*/
     background-color: #1B2340;
     border-radius: 12px;
-    transition: width 0.6s ease-out;
+    transition: width 0.6s ease-out; /*transition on, et kui laiust muudetakse venib sujuvalt*/
 }
 
 #acorn-indicator {
     position: absolute;
     top: 35%; 
-    right: -50px; 
+    right: -50px; /*hoiab pilti sinise riba paremas otsas*/
     width: 100px;
     height: 100px;
-    transform-origin: center center;
+    transform-origin: center center; /*keerleb pildi keskpunktis*/
     transform: translateY(-50%) rotate(0deg); 
-    transition: transform 0.6s ease-out; 
+    transition: transform 0.6s ease-out; /*rotate töötaks sujuvalt*/
     z-index: 100;
 }
 
 /* ====================================ELISABET ==================================== */
 /*laadimine */
 #center-loader {
-    position: fixed; 
-    top: 50%;
+    position: fixed; /*fixed ekraani suhtes, mitte konteineri*/
+    top: 50%; /*top 50% ja Left 50% viivad pildi nurga ekraani keskele*/
     left: 50%;
     width: 150px; 
     height: 150px;
-    z-index: 9999; 
-    opacity: 0; 
-    transition: opacity 0.2s ease;
+    z-index: 9999; /*hoiab laadija kõige pealmise kihina veebis*/
+    opacity: 0; /*alustab nähtamatuna, TypeScript lülitab sisse*/
+    transition: opacity 0.2s ease; /*sujuv sisse- ja väljahajumine*/
+    /*animation käivitab calmCenterSpin koodi, mis kestab 1.2 sekundit ja kordub igavesti*/
     animation: calmCenterSpin 1.2s linear infinite;
+    /*translate(-50%, -50%) nihutab pildi oma keskpunktiga täpselt ekraani tsentrisse*/
     transform: translate(-50%, -50%);
 }
 
+/*laadija pöörlemise animatsiooni reegel: 0 kraadist kuni 360 kraadini*/
 @keyframes calmCenterSpin {
     from { transform: translate(-50%, -50%) rotate(0deg); }
     to { transform: translate(-50%, -50%) rotate(360deg); }
