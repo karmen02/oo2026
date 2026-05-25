@@ -60,7 +60,7 @@ var Test = /** @class */ (function () {
             this.currentIndex--;
         }
     };
-    //mitmes küs, obj või mitte midagi
+    //mitmes küs läbi indeksi
     Test.prototype.getCurrentQuestion = function () {
         return this.questions[this.currentIndex];
     };
