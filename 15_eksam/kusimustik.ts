@@ -54,7 +54,7 @@ class Test {
             this.currentIndex--;
         }
     }
-    //mitmes küs, obj või mitte midagi
+    //mitmes küs läbi indeksi
     getCurrentQuestion(): Question {
         return this.questions[this.currentIndex];
     }
